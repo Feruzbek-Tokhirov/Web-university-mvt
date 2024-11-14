@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="site-hero site-sm-hero overlay" data-stellar-background-ratio="0.5"
+         style="background-image: url({% static 'images/big_image_2.jpg' %});">
+    <div class="container">
+        <div class="row align-items-center justify-content-center site-hero-sm-inner">
+            <div class="col-md-7 text-center">
+                <div class="mb-5 element-animate">
+                    <h1 class="mb-2">Our Blog</h1>
+                    <p class="bcrumb"><a href="index-2.html">Home</a> <span
+                            class="sep ion-android-arrow-dropright px-2"></span> <span class="current">Blog</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="site-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-8 order-md-2">
+                <div class="row">
+                    {% for i in blogs %}
+                    <div class="col-md-12 col-lg-6 mb-5">
+                        <div class="block-20 ">
+                            <figure>
+                                <a href="/blog_detail/{{i.id}}"><img src="{{i.image.url}}" alt="" class="img-fluid"></a>
+                            </figure>
+                            <div class="text">
+                                <h3 class="heading"><a href="/blog_detail/{{i.id}}">{{i.title}}</a></h3>
+                                <div class="meta">
+                                    <div><a href="/blog_detail/{{i.id}}"><span class="ion-android-calendar"></span>{{i.update_date}}</a></div>
+                                    <div><a href="/blog_detail/{{i.id}}"><span class="ion-android-person"></span> Admin</a></div>
+                                    <div><a href="/blog_detail/{{i.id}}"><span class="ion-chatbubble"></span>{{i.comment.count}}</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="row mb-5">
+                    <div class="col-md-12 text-center">
+                        <div class="block-27">
+                            <ul>
+                                {% if blogs.has_previous %}
+                                <li><a href="?page={{ blogs.previous_page_number }}"><</a></li>
+                                {% endif %}
+
+                                {% for i in blogs.paginator.page_range %}
+                                {% if blogs.number == i %}
+                                    <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% if blogs.has_next %}
+                                <li><a href="?page={{ blogs.next_page_number }}">></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 order-md-1">
+                <div class="block-24 mb-5">
+                    <h3 class="heading">Categories</h3>
+                    <ul>
+                        {% for i in categorys %}
+                        <li><a href="#">{{i.title}}<span>{{i.category.count}}</span></a></li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <div class="block-25 mb-5">
+                    <div class="heading">Recent Courses</div>
+                    <ul>
+                        <li>
+                            <a href="#" class="d-flex">
+                                <figure class="image mr-3">
+                                    <img src="images/img_2_b.jpg" alt="" class="img-fluid">
+                                </figure>
+                                <div class="text">
+                                    <h3 class="heading">Create cool websites using this template</h3>
+                                    <span class="meta">$34</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block-26">
+                    <h3 class="heading">Tags</h3>
+                    <ul>
+                        {% for i in tags %}
+                        <li><a href="#">{{i.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

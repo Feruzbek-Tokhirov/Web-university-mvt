@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="site-hero site-sm-hero overlay" data-stellar-background-ratio="0.5"
+         style="background-image: url({{blog.image.url}});">
+    <div class="container">
+        <div class="row align-items-center justify-content-center site-hero-sm-inner">
+            <div class="col-md-12 text-center">
+                <div class="mb-5 element-animate">
+                    <h1 class="mb-2">Even the all-powerful Pointing has no control about the blind texts</h1>
+                    <p class="bcrumb">by <a href="#">Johan Charles</a> on <a href="#">January 20, 2018</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="site-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-8 order-md-2 pl-lg-5">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 mb-5">
+                        {% for i in blog.descriptions.all %}
+                        <p>{{i.description}}</p>
+                        {% endfor %}
+                        <div class="pt-5">
+                            <p>Tag:
+                                {% for i in blog.tag.all %}
+                                <a href="#">{{ i.title }}</a>
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="pt-5">
+                            <h3 class="mb-5">{{ blog.comment.count }} Comments</h3>
+                            <ul class="comment-list">
+                                {% for i in blog.comment.all %}
+                                <li class="comment">
+                                    <div class="comment-body">
+                                        <h3>{{i.full_name}}</h3>
+                                        <div class="meta">{{i.create_date}}</div>
+                                        <p>{{i.message}}</p>
+                                        <p><a href="#" class="reply">Reply</a></p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                            <div class="comment-form-wrap pt-5">
+                                <h3 class="mb-5">Leave a comment</h3>
+                                <form method="post" action="#" class="bg-light">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="full_name">Name *</label>
+<!--                                        <input type="text" class="form-control" id="full_name">-->
+                                        {{form.full_name}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email *</label>
+<!--                                        <input type="email" class="form-control" id="email">-->
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message">Message</label>
+<!--                                        <textarea name="" id="message" cols="30" rows="10"-->
+<!--                                                  class="form-control"></textarea>-->
+                                    {{ form.message }}
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Post Comment" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 order-md-1">
+                <div class="block-24 mb-5">
+                    <h3 class="heading">Categories</h3>
+                    <ul>
+                        {% for i in categorys %}
+                        <li><a href="#">{{i.title}}<span>{{i.category.count}}</span></a></li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <div class="block-25 mb-5">
+                    <div class="heading">Recent Courses</div>
+                    <ul>
+                        <li>
+                            <a href="#" class="d-flex">
+                                <figure class="image mr-3">
+                                    <img src="images/img_2_b.jpg" alt="" class="img-fluid">
+                                </figure>
+                                <div class="text">
+                                    <h3 class="heading">Create cool websites using this template</h3>
+                                    <span class="meta">$34</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block-26">
+                    <h3 class="heading">Tags</h3>
+                    <ul>
+                        {% for i in tags %}
+                        <li><a href="#">{{i.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
